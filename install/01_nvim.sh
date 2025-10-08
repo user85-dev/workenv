@@ -34,6 +34,6 @@ fi
 tar -xzf "$ARCHIVE"
 rm "$ARCHIVE"
 
-mv -f "$NEOVIM_BUILD/bin/nvim" "$HOME/.local/bin/nvim"
+mv -f "$NEOVIM_BUILD/bin/nvim" "$HOME/.local/bin"
 
 echo "Neovim $NEOVIM_VERSION downloaded"
