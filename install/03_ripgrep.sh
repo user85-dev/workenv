@@ -2,6 +2,11 @@
 set -euo pipefail
 IFS=$'\n\t'
 
+if command -v rg &>/dev/null; then
+	echo "Ripgrep is already installed"
+	exit 0
+if
+
 RIPGREP_VERSION="14.1.1"
 PACKAGE="ripgrep_${RIPGREP_VERSION}-1_amd64.deb"
 DOWNLOAD_URL="https://github.com/BurntSushi/ripgrep/releases/download/${RIPGREP_VERSION}/${PACKAGE}"

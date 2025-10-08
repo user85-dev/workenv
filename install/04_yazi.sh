@@ -2,11 +2,16 @@
 set -euo pipefail
 IFS=$'\n\t'
 
+if command -v yazi &>/dev/null; then
+	echo "Yazi is already installed"
+	exit 0
+if
+
 YAZI_VERSION="v25.5.31"
 ZIPFILE="yazi-x86_64-unknown-linux-gnu.zip"
 DIRNAME="yazi-x86_64-unknown-linux-gnu"
 INSTALL_DIR="$HOME/.local/bin"
-INSTALL_PATH="$INSTALL_DIR/"
+INSTALL_PATH="$INSTALL_DIR/yazi"
 DOWNLOAD_URL="https://github.com/sxyazi/yazi/releases/download/${YAZI_VERSION}/${ZIPFILE}"
 
 echo "Updating package lists..."

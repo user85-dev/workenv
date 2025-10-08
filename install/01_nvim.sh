@@ -6,12 +6,12 @@ NEOVIM_BUILD="nvim-linux-x86_64"
 NEOVIM_VERSION=""
 
 if command -v nvim &>/dev/null; then
-	exit
-	NEOVIM_VERSION=$(nvim --version | grep -oP '^NVIM \Kv[\d.]+')
-else
-	NEOVIM_VERSION=$(curl -s "https://api.github.com/repos/neovim/neovim/releases/latest" |
+	echo "Neovim is already installed"
+	exit 0
+if
+
+NEOVIM_VERSION=$(curl -s "https://api.github.com/repos/neovim/neovim/releases/latest" |
 		grep -Po '"tag_name": *"\Kv[^"]+')
-fi
 
 echo "Neovim version to be installed: $NEOVIM_VERSION"
 
@@ -34,6 +34,7 @@ fi
 tar -xzf "$ARCHIVE"
 rm "$ARCHIVE"
 
-mv -f "$NEOVIM_BUILD/bin/nvim" "$HOME/.local/bin"
+mkdir -p "$HOME/.local/bin"
+mv -f "$NEOVIM_BUILD/bin/nvim" "$HOME/.local/bin/nvim"
 
 echo "Neovim $NEOVIM_VERSION downloaded"

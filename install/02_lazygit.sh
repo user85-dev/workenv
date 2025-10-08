@@ -2,6 +2,11 @@
 set -euo pipefail
 IFS=$'\n\t'
 
+if command -v lazygit &>/dev/null; then
+	echo "Lazygit is already installed"
+	exit 0
+if
+
 LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep -Po '"tag_name": *"v\K[^"]+')
 
 if [[ -z "$LAZYGIT_VERSION" ]]; then
