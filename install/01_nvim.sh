@@ -15,7 +15,7 @@ fi
 
 echo "Neovim version to be installed: $NEOVIM_VERSION"
 
-DOWNLOAD_URL="https://github.com/neovim/neovim/releases/download/v${NEOVIM_VERSION}/${NEOVIM_BUILD}.tar.gz"
+DOWNLOAD_URL="https://github.com/neovim/neovim/releases/download/${NEOVIM_VERSION}/${NEOVIM_BUILD}.tar.gz"
 ARCHIVE="${NEOVIM_BUILD}.tar.gz"
 
 echo "Downloading Neovim from: $DOWNLOAD_URL"
