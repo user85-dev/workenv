@@ -2,20 +2,24 @@
 set -euo pipefail
 IFS=$'\n\t'
 
-INSTALL_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/install"
+API_URL="https://api.github.com/repos/user85-dev/workenv/contents/install?ref=master"
 
-echo "Starting setup..."
+echo "Fetching list of install scripts from GitHub API..."
+SCRIPTS=$(curl -sSL "$API_URL" |
+	jq -r '.[] | select(.name | endswith(".sh")) | .download_url' | sort)
 
-if [ ! -d "$INSTALL_DIR" ]; then
-	echo "Error: install directory not found: $INSTALL_DIR"
+if [[ -z "$SCRIPTS" ]]; then
+	echo "No install scripts found in install folder."
 	exit 1
 fi
 
-# Find all .sh scripts in install dir, sort, then execute them in order
-for script in $(find "$INSTALL_DIR" -maxdepth 1 -name '*.sh' | sort); do
-	echo "Running $script ..."
-	bash "$script"
-	echo "$script completed."
+echo "Running install scripts..."
+
+for url in $SCRIPTS; do
+	filename=$(basename "$url")
+	echo "Running $filename ..."
+	curl -sSL "$url" | bash
+	echo "$filename completed."
 done
 
-echo "All install scripts completed!"
+echo "Setup complete!"
