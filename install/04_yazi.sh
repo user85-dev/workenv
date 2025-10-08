@@ -5,7 +5,7 @@ IFS=$'\n\t'
 if command -v yazi &>/dev/null; then
 	echo "Yazi is already installed"
 	exit 0
-if
+fi
 
 YAZI_VERSION="v25.5.31"
 ZIPFILE="yazi-x86_64-unknown-linux-gnu.zip"

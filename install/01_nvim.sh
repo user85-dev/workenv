@@ -8,10 +8,10 @@ NEOVIM_VERSION=""
 if command -v nvim &>/dev/null; then
 	echo "Neovim is already installed"
 	exit 0
-if
+fi
 
 NEOVIM_VERSION=$(curl -s "https://api.github.com/repos/neovim/neovim/releases/latest" |
-		grep -Po '"tag_name": *"\Kv[^"]+')
+	grep -Po '"tag_name": *"\Kv[^"]+')
 
 echo "Neovim version to be installed: $NEOVIM_VERSION"
 
