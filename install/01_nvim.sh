@@ -34,7 +34,12 @@ fi
 tar -xzf "$ARCHIVE"
 rm "$ARCHIVE"
 
+mkdir -p "$HOME/.local/nvim"
+mv "$NEOVIM_BUILD"/* "$HOME/.local/nvim/"
+
 mkdir -p "$HOME/.local/bin"
-mv -f "$NEOVIM_BUILD/bin/nvim" "$HOME/.local/bin/nvim"
+ln -sf "$HOME/.local/nvim/bin/nvim" "$HOME/.local/bin/nvim"
+
+rm -rf "$NEOVIM_BUILD"
 
 echo "Neovim $NEOVIM_VERSION downloaded"
