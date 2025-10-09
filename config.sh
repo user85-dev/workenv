@@ -8,7 +8,7 @@ LOCAL_SHARE_NVIM="$HOME/.local/share/nvim"
 LOCAL_STATE_NVIM="$HOME/.local/state/nvim"
 
 BASH_ALIASES_PATH="$HOME/.bash_aliases"
-VIMRC_PATH="$PATH/.vimrc"
+VIMRC_PATH="$HOME/.vimrc"
 
 SCRIPT_DIR="$HOME/connect-coder"
 source "$SCRIPT_DIR/modules/select_coder_env.sh"
