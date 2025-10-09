@@ -12,7 +12,7 @@ if command -v nodemon &>/dev/null; then
 	exit 0
 fi
 
-npm i -g nodemon
+sudo npm i -g nodemon
 
 echo "alias node-watch='nodemon --watch src --ext js,pug,json server.js'" >>"$HOME/.bash_aliases"
 
