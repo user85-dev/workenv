@@ -10,12 +10,22 @@ if command -v nvim &>/dev/null; then
 	exit 0
 fi
 
-NEOVIM_VERSION=$(curl -s "https://api.github.com/repos/neovim/neovim/releases/latest" |
+GLIBC_VERSION=$(ldd --version | grep -Po '\b\d+\.\d+\b' | head -n1)
+NEOVIM_REPO= ""
+
+if [ "$(printf "%s\n" "$GLIBC_VERSION" "2.41" | sort -V | head -n1)" != "2.41" ]; then
+	NEOVIM_REPO="neovim-release"
+	echo "Will install the unsupported builds"
+else
+	NEOVIM_REPO="neovim"
+fi
+
+NEOVIM_VERSION=$(curl -s "https://api.github.com/repos/neovim/$NEOVIM_REPO/releases/latest" |
 	grep -Po '"tag_name": *"\Kv[^"]+')
 
 echo "Neovim version to be installed: $NEOVIM_VERSION"
 
-DOWNLOAD_URL="https://github.com/neovim/neovim/releases/download/${NEOVIM_VERSION}/${NEOVIM_BUILD}.tar.gz"
+DOWNLOAD_URL="https://github.com/neovim/$NEOVIM_REPO/releases/download/${NEOVIM_VERSION}/${NEOVIM_BUILD}.tar.gz"
 ARCHIVE="${NEOVIM_BUILD}.tar.gz"
 
 echo "Downloading Neovim from: $DOWNLOAD_URL"
