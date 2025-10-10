@@ -12,8 +12,9 @@ fi
 
 GLIBC_VERSION=$(ldd --version | grep -Po '\b\d+\.\d+\b' | head -n1)
 NEOVIM_REPO=""
+MIN_GLIBC_VER="2.39"
 
-if [ "$(printf "%s\n" "$GLIBC_VERSION" "2.41" | sort -V | head -n1)" != "2.41" ]; then
+if [ "$(printf "%s\n" "$GLIBC_VERSION" "$MIN_GLIBC_VER" | sort -V | head -n1)" != "$MIN_GLIBC_VER" ]; then
 	NEOVIM_REPO="neovim-releases"
 	echo "Will install the unsupported builds"
 else

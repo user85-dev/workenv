@@ -21,9 +21,9 @@ EOF
 
 rsync -avz --delete "$CONFIG_YAZI" "$SSH_HOST:~/.config/"
 rsync -avz --delete "$CONFIG_NVIM" "$SSH_HOST:~/.config/"
-rsync -avz --delete "$CACHE_NVIM" "$SSH_HOST:~/.cache/"
-rsync -avz --delete "$LOCAL_SHARE_NVIM" "$SSH_HOST:~/.local/share/"
-rsync -avz --delete "$LOCAL_STATE_NVIM" "$SSH_HOST:~/.local/state/"
+# rsync -avz --delete "$CACHE_NVIM" "$SSH_HOST:~/.cache/"
+# rsync -avz --delete "$LOCAL_SHARE_NVIM" "$SSH_HOST:~/.local/share/"
+# rsync -avz --delete "$LOCAL_STATE_NVIM" "$SSH_HOST:~/.local/state/"
 
 scp "$BASH_ALIASES_PATH" "$SSH_HOST:~/.bash_aliases"
 scp "$VIMRC_PATH" "$SSH_HOST:~/.vimrc"
