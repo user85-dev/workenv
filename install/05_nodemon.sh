@@ -14,6 +14,6 @@ fi
 
 sudo npm i -g nodemon
 
-echo "alias node-watch='nodemon --watch src --ext js,pug,json server.js'" >>"$HOME/.bash_aliases"
+echo "alias node-watch='nodemon src/server.js -e js,pug,json'" >>"$HOME/.bash_aliases"
 
 echo "Nodemon installed successfully, and run with node-watch"
