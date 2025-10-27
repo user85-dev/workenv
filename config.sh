@@ -13,7 +13,7 @@ VIMRC_PATH="$HOME/.vimrc"
 SCRIPT_DIR="$HOME/connect-coder"
 source "$SCRIPT_DIR/modules/select_coder_env.sh"
 
-select_environment
+select_environment 1
 
 ssh "$SSH_HOST" <<EOF
 mkdir -p ~/.config ~/.cache ~/.local/share ~/.local/state
