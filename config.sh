@@ -7,10 +7,10 @@ CACHE_NVIM="$HOME/.cache/nvim"
 LOCAL_SHARE_NVIM="$HOME/.local/share/nvim"
 LOCAL_STATE_NVIM="$HOME/.local/state/nvim"
 
-BASH_ALIASES_PATH="$HOME/.bash_aliases"
+BASH_ALIASES_PATH="$HOME/.zsh_aliases"
 VIMRC_PATH="$HOME/.vimrc"
 
-SCRIPT_DIR="$HOME/connect-coder"
+SCRIPT_DIR="$HOME/Documents/Programming/Workbench/connect-coder"
 source "$SCRIPT_DIR/modules/select_coder_env.sh"
 
 select_environment 1
