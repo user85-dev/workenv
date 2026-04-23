@@ -7,7 +7,7 @@ CACHE_NVIM="$HOME/.cache/nvim"
 LOCAL_SHARE_NVIM="$HOME/.local/share/nvim"
 LOCAL_STATE_NVIM="$HOME/.local/state/nvim"
 
-BASH_ALIASES_PATH="$HOME/.zsh_aliases"
+BASH_ALIASES_PATH="$PROGRAMMING_PATH/Projects/dotfiles/config/.aliases"
 VIMRC_PATH="$HOME/.vimrc"
 
 SCRIPT_DIR="$HOME/Documents/Programming/Workbench/connect-coder"
