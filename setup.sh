@@ -15,11 +15,24 @@ fi
 
 echo "Running install scripts..."
 
+failed=()
+
 for url in $SCRIPTS; do
 	filename=$(basename "$url")
 	echo "Running $filename ..."
-	curl -sSL "$url" | bash
-	echo "$filename completed."
+
+	if curl -fsSL "$url" | bash >/dev/null 2>&1; then
+		echo "$filename completed."
+	else
+		echo "$filename failed."
+		failed+=("$filename")
+	fi
 done
+
+echo "----"
+if [ ${#failed[@]} -ne 0 ]; then
+	echo "Failed scripts:"
+	printf '%s\n' "${failed[@]}"
+fi
 
 echo "Setup complete!"
