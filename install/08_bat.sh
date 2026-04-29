@@ -7,10 +7,12 @@ if command -v batcat &>/dev/null || command -v bat &>/dev/null; then
   exit 0
 fi
 
-sudo apt i bat
+sudo apt-get update
+sudo apt-get install -y bat
 
-aliases='batcat'
-if command -v bat &>/dev/null; then
+if command -v batcat &>/dev/null; then
+  aliases='batcat'
+else
   aliases='bat'
 fi
 
