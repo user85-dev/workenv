@@ -7,7 +7,7 @@ if command -v yazi &>/dev/null; then
 	exit 0
 fi
 
-YAZI_VERSION="v25.5.31"
+YAZI_VERSION="v25.12.29"
 ZIPFILE="yazi-x86_64-unknown-linux-gnu.zip"
 DIRNAME="yazi-x86_64-unknown-linux-gnu"
 INSTALL_DIR="$HOME/.local/bin"
