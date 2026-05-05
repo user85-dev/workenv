@@ -21,10 +21,17 @@ for url in $SCRIPTS; do
 	filename=$(basename "$url")
 	echo "Running $filename ..."
 
-	if curl -fsSL "$url" | bash >/dev/null 2>&1; then
+	timeout 30s bash -c "curl -fsSL '$url' | bash" >/dev/null 2>&1
+	status=$?
+
+	if [ $status -eq 0 ]; then
 		echo "$filename completed."
 	else
-		echo "$filename failed."
+		if [ $status -eq 124 ]; then
+			echo "$filename timeout."
+		else
+			echo "$filename failed."
+		fi
 		failed+=("$filename")
 	fi
 done
