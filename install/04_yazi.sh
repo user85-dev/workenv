@@ -17,15 +17,16 @@ DOWNLOAD_URL="https://github.com/sxyazi/yazi/releases/download/${YAZI_VERSION}/$
 echo "Updating package lists..."
 sudo apt update
 
-echo "Installing 'file' package if not already installed..."
 if ! dpkg -s file &>/dev/null; then
 	sudo apt install -y file
-else
-	echo "'file' is already installed."
+fi
+
+if ! command -v unzip &>/dev/null; then
+	sudo apt install -y unzip
 fi
 
 echo "Downloading Yazi $YAZI_VERSION..."
-curl -LO "$DOWNLOAD_URL"
+curl -fL -o "$ZIPFILE" "$DOWNLOAD_URL"
 
 unzip -o "$ZIPFILE"
 mkdir -p "$INSTALL_DIR"
@@ -33,5 +34,9 @@ mv -f "$DIRNAME/yazi" "$INSTALL_PATH"
 chmod +x "$INSTALL_PATH"
 
 rm -rf "$ZIPFILE" "$DIRNAME"
+
+if [[ ":$PATH:" != *":$HOME/.local/bin:"* ]]; then
+	echo "Warning: $HOME/.local/bin is not in PATH"
+fi
 
 echo "Yazi installed successfully at $INSTALL_PATH"
