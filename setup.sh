@@ -3,6 +3,7 @@ set -euo pipefail
 IFS=$'\n\t'
 
 API_URL="https://api.github.com/repos/user85-dev/workenv/contents/install?ref=master"
+MAX_JOBS=3
 
 echo "Fetching list of install scripts from GitHub API..."
 SCRIPTS=$(curl -sSL "$API_URL" |
@@ -16,9 +17,13 @@ fi
 echo "Running install scripts..."
 
 failed=()
+pids=()
 
-for url in $SCRIPTS; do
+run_script() {
+	local url="$1"
+	local filename
 	filename=$(basename "$url")
+
 	echo "Running $filename ..."
 
 	set +e
@@ -34,9 +39,40 @@ for url in $SCRIPTS; do
 		else
 			echo "$filename failed."
 		fi
-		failed+=("$filename")
+		echo "$filename" >>/tmp/failed_scripts.$$
+	fi
+}
+
+tmp_failed="/tmp/failed_scripts.$$"
+: >"$tmp_failed"
+
+for url in $SCRIPTS; do
+	# run in background
+	run_script "$url" &
+	pids+=($!)
+
+	# limit concurrency
+	if [ "${#pids[@]}" -ge "$MAX_JOBS" ]; then
+		wait -n
+		# cleanup finished pids
+		new_pids=()
+		for pid in "${pids[@]}"; do
+			if kill -0 "$pid" 2>/dev/null; then
+				new_pids+=("$pid")
+			fi
+		done
+		pids=("${new_pids[@]}")
 	fi
 done
+
+# wait remaining jobs
+wait
+
+# collect failures
+if [[ -f "$tmp_failed" ]]; then
+	mapfile -t failed <"$tmp_failed"
+	rm -f "$tmp_failed"
+fi
 
 echo "----"
 if [ ${#failed[@]} -ne 0 ]; then
