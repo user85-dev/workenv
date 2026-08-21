@@ -81,3 +81,5 @@ if [ ${#failed[@]} -ne 0 ]; then
 fi
 
 echo "Setup complete!"
+
+exec bash

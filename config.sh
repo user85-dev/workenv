@@ -29,3 +29,5 @@ scp "$BASH_ALIASES_PATH" "$SSH_HOST:~/.bash_aliases"
 scp "$VIMRC_PATH" "$SSH_HOST:~/.vimrc"
 
 echo "Configs copied to $SSH_HOST"
+
+ccn
