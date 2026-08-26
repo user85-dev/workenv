@@ -16,63 +16,43 @@ fi
 
 echo "Running install scripts..."
 
-failed=()
-pids=()
+tmp_failed="/tmp/failed_scripts.$$"
+: >"$tmp_failed"
 
 run_script() {
 	local url="$1"
 	local filename
 	filename=$(basename "$url")
-
 	echo "Running $filename ..."
-
-	set +e
-	timeout 30s bash -c "curl -fsSL '$url' | bash" >/dev/null 2>&1
-	status=$?
-	set -e
-
-	if [ $status -eq 0 ]; then
+	if timeout 30s bash -c "curl -fsSL '$url' | bash" >/tmp/log.$$."$filename" 2>&1; then
 		echo "$filename completed."
 	else
-		if [ $status -eq 124 ]; then
+		status=$?
+		if [ "$status" -eq 124 ]; then
 			echo "$filename timeout."
 		else
 			echo "$filename failed."
 		fi
-		echo "$filename" >>/tmp/failed_scripts.$$
+		echo "$filename" >>"$tmp_failed"
 	fi
 }
 
-tmp_failed="/tmp/failed_scripts.$$"
-: >"$tmp_failed"
-
+job_count=0
 for url in $SCRIPTS; do
-	# run in background
 	run_script "$url" &
-	pids+=($!)
-
-	# limit concurrency
-	if [ "${#pids[@]}" -ge "$MAX_JOBS" ]; then
+	job_count=$((job_count + 1))
+	if [ "$job_count" -ge "$MAX_JOBS" ]; then
 		wait -n
-		# cleanup finished pids
-		new_pids=()
-		for pid in "${pids[@]}"; do
-			if kill -0 "$pid" 2>/dev/null; then
-				new_pids+=("$pid")
-			fi
-		done
-		pids=("${new_pids[@]}")
+		job_count=$((job_count - 1))
 	fi
 done
-
-# wait remaining jobs
 wait
 
-# collect failures
-if [[ -f "$tmp_failed" ]]; then
+failed=()
+if [[ -s "$tmp_failed" ]]; then
 	mapfile -t failed <"$tmp_failed"
-	rm -f "$tmp_failed"
 fi
+rm -f "$tmp_failed"
 
 echo "----"
 if [ ${#failed[@]} -ne 0 ]; then
