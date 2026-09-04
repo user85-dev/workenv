@@ -30,4 +30,4 @@ scp "$VIMRC_PATH" "$SSH_HOST:~/.vimrc"
 
 echo "Configs copied to $SSH_HOST"
 
-ccn
+exec "$CONNECT_CODER_PATH/connect_coder.sh" -np
