@@ -11,6 +11,7 @@ BASH_ALIASES_PATH="$PROGRAMMING_PATH/Projects/dotfiles/config/.aliases"
 VIMRC_PATH="$HOME/.vimrc"
 
 SCRIPT_DIR="$HOME/Documents/Programming/Workbench/connect-coder"
+CONNECT_CODER_PATH="$SCRIPT_DIR"
 source "$SCRIPT_DIR/modules/select_coder_env.sh"
 
 select_environment 1
@@ -30,4 +31,10 @@ scp "$VIMRC_PATH" "$SSH_HOST:~/.vimrc"
 
 echo "Configs copied to $SSH_HOST"
 
-exec "$CONNECT_CODER_PATH/connect_coder.sh" -np
+env_index=1
+for key in "${KEYS[@]}"; do
+	[[ "$key" == "$SELECTED_CODER" ]] && break
+	((env_index++))
+done
+
+exec "$CONNECT_CODER_PATH/connect_coder.sh" -e "$env_index" -np

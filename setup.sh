@@ -62,4 +62,8 @@ fi
 
 echo "Setup complete!"
 
-exec bash
+if [ -t 0 ]; then
+	exec bash -i
+elif [ -e /dev/tty ]; then
+	exec bash -i </dev/tty
+fi
