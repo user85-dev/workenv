@@ -5,4 +5,4 @@ my work env
 curl -sSL https://raw.githubusercontent.com/user85-dev/workenv/refs/heads/master/setup.sh | bash
 ```
 
-run ```config.sh``` locally
+run ```config.sh``` locally to copy current config
