@@ -20,8 +20,8 @@ ssh "$SSH_HOST" <<EOF
 mkdir -p ~/.config ~/.cache ~/.local/share ~/.local/state
 EOF
 
-rsync -avz --delete "$CONFIG_YAZI" "$SSH_HOST:~/.config/"
-rsync -avz --delete "$CONFIG_NVIM" "$SSH_HOST:~/.config/"
+rsync -avzL --delete "$CONFIG_YAZI" "$SSH_HOST:~/.config/"
+rsync -avzL --delete "$CONFIG_NVIM" "$SSH_HOST:~/.config/"
 # rsync -avz --delete "$CACHE_NVIM" "$SSH_HOST:~/.cache/"
 # rsync -avz --delete "$LOCAL_SHARE_NVIM" "$SSH_HOST:~/.local/share/"
 # rsync -avz --delete "$LOCAL_STATE_NVIM" "$SSH_HOST:~/.local/state/"
