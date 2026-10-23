@@ -12,6 +12,8 @@ VIMRC_PATH="$HOME/.vimrc"
 
 SCRIPT_DIR="$HOME/Documents/Programming/Workbench/connect-coder"
 CONNECT_CODER_PATH="$SCRIPT_DIR"
+WORKENV_DIR="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
+ENV_FILE="$WORKENV_DIR/.env"
 source "$SCRIPT_DIR/modules/select_coder_env.sh"
 
 select_environment 1
@@ -28,6 +30,12 @@ rsync -avzL --delete "$CONFIG_NVIM" "$SSH_HOST:~/.config/"
 
 scp "$BASH_ALIASES_PATH" "$SSH_HOST:~/.bash_aliases"
 scp "$VIMRC_PATH" "$SSH_HOST:~/.vimrc"
+
+if [[ -f "$ENV_FILE" ]]; then
+	scp "$ENV_FILE" "$SSH_HOST:~/.env"
+else
+	echo "No $ENV_FILE, skipping .env copy."
+fi
 
 echo "Configs copied to $SSH_HOST"
 
